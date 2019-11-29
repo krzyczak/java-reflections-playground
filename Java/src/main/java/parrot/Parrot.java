@@ -25,10 +25,15 @@ abstract class Parrot {
   }
 
   public static Parrot getParrot(ParrotTypeEnum type, int numberOfCoconuts, double voltage, boolean isNailed) {
-    // Parrot parrot = (Parrot)parrotTypes.get(type.toString()).getDeclaredConstructors()[0].newInstance(numberOfCoconuts, voltage, isNailed);
-    Parrot parrot = getParrotOld(type, numberOfCoconuts, voltage, isNailed);
-
-    return parrot;
+    try {
+      return (Parrot)parrotTypes.get(type.toString()).getDeclaredConstructors()[0].newInstance(numberOfCoconuts, voltage, isNailed);
+    } catch (InstantiationException e) {
+      return new European(numberOfCoconuts, voltage, isNailed);
+    } catch (IllegalAccessException e) {
+      return new European(numberOfCoconuts, voltage, isNailed);
+    } catch (java.lang.reflect.InvocationTargetException e) {
+      return new European(numberOfCoconuts, voltage, isNailed);
+    }
   }
 
   protected int numberOfCoconuts;
